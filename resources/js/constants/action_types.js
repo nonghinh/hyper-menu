@@ -1,0 +1,6 @@
+export const SET_MENU_DATA = 'SET_MENU_DATA';
+export const SET_MENU_ACTIVE = 'SET_MENU_ACTIVE';
+export const SET_MENU_ITEM_EDITING = 'SET_MENU_ITEM_EDITING';
+export const ADD_MENU_ITEM = 'ADD_MENU_ITEM';
+export const SET_PRODUCTS = 'SET_PRODUCTS';
+export const SET_COLLECTIONS = 'SET_COLLECTIONS';
