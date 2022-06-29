@@ -45,7 +45,7 @@ function MainMenuItem({item, index}){
     console.log(item.link_disabled);
     console.log(menuLink);
     return <MenuItem>
-        <WrapperItemWithAction tagName={`a`} href={menuLink} onClick={handleClickLink} menuIndex={`[${index}]`}>
+        <WrapperItemWithAction bgImage={item.bg_image} tagName={`a`} href={menuLink} onClick={handleClickLink} menuIndex={`[${index}]`}>
             <span className={`sss`}>{item.title}</span>
         </WrapperItemWithAction>
 

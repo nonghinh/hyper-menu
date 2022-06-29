@@ -6,10 +6,9 @@ return [
     | Debug Mode
     |--------------------------------------------------------------------------
     |
-    | (Not yet complete) A verbose logged output of processes.
+    | (Not yet complete) A verbose logged output of processes
     |
     */
-
     'debug' => (bool) env('SHOPIFY_DEBUG', false),
 
     /*
@@ -22,7 +21,6 @@ return [
     | to your app's folder so you're free to modify before migrating.
     |
     */
-
     'manual_migrations' => (bool) env('SHOPIFY_MANUAL_MIGRATIONS', false),
 
     /*
@@ -37,12 +35,10 @@ return [
     | for a list of available route names.
     | Example: `home,billing` would ignore both "home" and "billing" routes.
     |
-    | Please note that if you override the route names
-    | (see "route_names" below), the route names that are used in this
-    | option DO NOT change!
+    | Please note that if you override the route names (see "route_names" below),
+    | the route names that are used in this option DO NOT change!
     |
     */
-
     'manual_routes' => env('SHOPIFY_MANUAL_ROUTES', false),
 
     /*
@@ -54,37 +50,17 @@ return [
     | This can help you avoid collisions with your existing route names.
     |
     */
-
     'route_names' => [
         'home'                 => env('SHOPIFY_ROUTE_NAME_HOME', 'home'),
         'authenticate'         => env('SHOPIFY_ROUTE_NAME_AUTHENTICATE', 'authenticate'),
-        'authenticate.token'   => env('SHOPIFY_ROUTE_NAME_AUTHENTICATE_TOKEN', 'authenticate.token'),
+        'authenticate.oauth'   => env('SHOPIFY_ROUTE_NAME_AUTHENTICATE_OAUTH', 'authenticate.oauth'),
         'billing'              => env('SHOPIFY_ROUTE_NAME_BILLING', 'billing'),
         'billing.process'      => env('SHOPIFY_ROUTE_NAME_BILLING_PROCESS', 'billing.process'),
         'billing.usage_charge' => env('SHOPIFY_ROUTE_NAME_BILLING_USAGE_CHARGE', 'billing.usage_charge'),
         'webhook'              => env('SHOPIFY_ROUTE_NAME_WEBHOOK', 'webhook'),
+        'itp'                  => env('SHOPIFY_ROUTE_NAME_ITP', 'itp'),
+        'itp.ask'              => env('SHOPIFY_ROUTE_NAME_ITP_ASK', 'itp.ask'),
     ],
-
-    /*
-    |--------------------------------------------------------------------------
-    | Shop auth guard
-    |--------------------------------------------------------------------------
-    |
-    | This option allows you to override auth guard used by package middlewares
-    |
-    */
-    'shop_auth_guard' => env('SHOPIFY_SHOP_AUTH_GUARD', null),
-
-    /*
-    |--------------------------------------------------------------------------
-    | Shop auth provider
-    |--------------------------------------------------------------------------
-    |
-    | This option allows you to override package's build-in auth model
-    | If you need to keep User model intact, add custom auth provider and route middlewares for it
-    |
-    */
-    'shop_auth_provider' => env('SHOPIFY_SHOP_AUTH_PROVIDER', 'users'),
 
     /*
     |--------------------------------------------------------------------------
@@ -105,12 +81,10 @@ return [
     |--------------------------------------------------------------------------
     |
     | This option allows you to change out the default job namespace
-    | which is \App\Jobs. This option is mainly used if any custom
-    | configuration is done in autoload and does not need to be changed
-    | unless required.
+    | which is \App\Jobs. This option is mainly used if any custom configuration
+    | is done in autoload and does not need to be changed unless required.
     |
     */
-
     'job_namespace' => env('SHOPIFY_JOB_NAMESPACE', '\\App\\Jobs\\'),
 
     /*
@@ -138,8 +112,8 @@ return [
     'appbridge_enabled' => (bool) env('SHOPIFY_APPBRIDGE_ENABLED', true),
 
     // Use semver range to link to a major or minor version number.
-    // Leaving empty will use the latest version - not recommended in production.
-    'appbridge_version' => env('SHOPIFY_APPBRIDGE_VERSION', 'latest'),
+    // Leaving empty will use the latest verison - not recommended in production.
+    'appbridge_version' => env('SHOPIFY_APPBRIDGE_VERSION', '1'),
 
     /*
     |--------------------------------------------------------------------------
@@ -158,13 +132,12 @@ return [
     |--------------------------------------------------------------------------
     |
     | This option is for the app's API version string.
-    | Use "YYYY-MM" or "unstable". Refer to Shopify documentation
-    | at https://shopify.dev/api/usage/versioning#release-schedule
-    | for the current stable version.
+    | Use "YYYY-MM" or "unstable". Refer to Shopify's documentation
+    | on API versioning for the current stable version.
     |
     */
 
-    'api_version' => env('SHOPIFY_API_VERSION', '2022-01'),
+    'api_version' => env('SHOPIFY_API_VERSION', '2020-01'),
 
     /*
     |--------------------------------------------------------------------------
@@ -197,7 +170,7 @@ return [
     |
     */
 
-    'api_scopes' => env('SHOPIFY_API_SCOPES', 'read_products,write_products'),
+    'api_scopes' => env('SHOPIFY_API_SCOPES', 'read_products,read_themes,write_themes,read_content'),
 
     /*
     |--------------------------------------------------------------------------
@@ -228,8 +201,7 @@ return [
     | Shopify API Time Store
     |--------------------------------------------------------------------------
     |
-    | This option is for the class which will hold the timestamps for
-    | API calls.
+    | This option is for the class which will hold the timestamps for API calls.
     |
     */
 
@@ -240,8 +212,7 @@ return [
     | Shopify API Limit Store
     |--------------------------------------------------------------------------
     |
-    | This option is for the class which will hold the call limits for REST
-    | and GraphQL.
+    | This option is for the class which will hold the call limits for REST and GraphQL.
     |
     */
 
@@ -252,8 +223,7 @@ return [
     | Shopify API Deferrer
     |--------------------------------------------------------------------------
     |
-    | This option is for the class which will handle sleep deferrals for
-    | API calls.
+    | This option is for the class which will handle sleep deferrals for API calls.
     |
     */
 
@@ -264,13 +234,10 @@ return [
     | Shopify API Init Function
     |--------------------------------------------------------------------------
     |
-    | This option is for initializing the BasicShopifyAPI package yourself.
-    | The first param injected in is the current options.
-    |    (\Osiset\BasicShopifyAPI\Options)
-    | The second param injected in is the session (if available) .
-    |    (\Osiset\BasicShopifyAPI\Session)
-    | The third param injected in is the current request input/query array.
-        (\Illuminate\Http\Request::all())
+    | This option is for initing the BasicShopifyAPI package optionally yourself.
+    | The first param injected in is the current options (\Osiset\BasicShopifyAPI\Options).
+    | The second param injected in is the session (if available) (\Osiset\BasicShopifyAPI\Session).
+    | The third param injected in is the current request input/query array (\Illuminate\Http\Request::all()).
     | With all this, you can customize the options, change params, and more.
     |
     | Value for this option must be a callable (callable, Closure, etc).
@@ -332,23 +299,17 @@ return [
     |--------------------------------------------------------------------------
     |
     | This option is for defining webhooks.
-    | `topic` is the GraphQL value of the Shopify webhook event.
-    | `address` is the endpoint to call.
-    |
-    | Valid values for `topic` can be found here:
-    | https://shopify.dev/api/admin/graphql/reference/events/webhooksubscriptiontopic
+    | Key is for the Shopify webhook event
+    | Value is for the endpoint to call
     |
     */
 
     'webhooks' => [
         /*
             [
-                'topic' => env('SHOPIFY_WEBHOOK_1_TOPIC', 'ORDERS_CREATE'),
+                'topic' => env('SHOPIFY_WEBHOOK_1_TOPIC', 'orders/create'),
                 'address' => env('SHOPIFY_WEBHOOK_1_ADDRESS', 'https://some-app.com/webhook/orders-create')
-            ], [
-                'topic' => env('SHOPIFY_WEBHOOK_2_TOPIC', 'APP_PURCHASES_ONE_TIME_UPDATE'),
-                'address' => env('SHOPIFY_WEBHOOK_2_ADDRESS', 'https://some-app.com/webhook/purchase'),
-            ]
+            ],
             ...
         */
     ],
@@ -414,9 +375,8 @@ return [
     | Config API Callback
     |--------------------------------------------------------------------------
     |
-    | This option can be used to modify what returns when `getConfig('api_*')`
-    | is used. A use-case for this is modifying the return of `api_secret`
-    | or something similar.
+    | This option can be used to modify what returns when `getConfig('api_*')` is used.
+    | A use-case for this is modifying the return of `api_secret` or something similar.
     |
     | A closure/callable is required.
     | The first argument will be the key string.
@@ -425,50 +385,4 @@ return [
     */
 
     'config_api_callback' => null,
-
-    /*
-    |--------------------------------------------------------------------------
-    | Enable Turbolinks or Hotwire Turbo
-    |--------------------------------------------------------------------------
-    |
-    | If you use Turbolinks/Turbo and Livewire, turn on this setting to get
-    | the token assigned automatically.
-    |
-    */
-
-    'turbo_enabled' => (bool) env('SHOPIFY_TURBO_ENABLED', false),
-
-    /*
-    |--------------------------------------------------------------------------
-    | Customize Models and Table Name
-    |--------------------------------------------------------------------------
-    |
-    | You can customize you model and extend them
-    | also you can customize tables name for charge and plan models.
-    |
-    */
-
-    'models' => [
-        /*
-        * The fully qualified class name of the Charge model.
-        */
-        'charge' => Osiset\ShopifyApp\Storage\Models\Charge::class,
-
-        /*
-        * The fully qualified class name of the Plan model.
-        */
-        'plan' => Osiset\ShopifyApp\Storage\Models\Plan::class,
-    ],
-
-    'table_names' => [
-        /*
-        * The table name for Charge model.
-        */
-        'charges' => 'charges',
-
-        /*
-        * The table name for Plan model.
-        */
-        'plans' => 'plans',
-    ]
 ];

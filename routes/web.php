@@ -13,11 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware(['verify.shopify']);
+Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware(['auth.shop', 'auth.shopify']);
 Route::get('/login', [\App\Http\Controllers\HomeController::class, 'login'])->name('login');
 Route::group(['prefix' => 'api'], function (){
    Route::get('/products/search', [\App\Http\Controllers\ProductController::class, 'search']);
    Route::get('/collections/search', [\App\Http\Controllers\CollectionController::class, 'search']);
+   Route::post('/image/upload', [\App\Http\Controllers\ImageController::class, 'upload']);
 });
 
 Route::get('/{path}', [\App\Http\Controllers\HomeController::class, 'index']);

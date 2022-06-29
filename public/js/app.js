@@ -6914,9 +6914,9 @@ function FormItem(props) {
 
     case 'image':
       inputItem = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_InputImage__WEBPACK_IMPORTED_MODULE_5__["default"], {
-        onChange: handleChangeValue,
         name: name,
-        value: value !== null && value !== void 0 ? value : ''
+        value: value !== null && value !== void 0 ? value : '',
+        onChange: handleChangeValue
       });
       break;
 
@@ -7073,44 +7073,44 @@ var PreviewImage = styled_components__WEBPACK_IMPORTED_MODULE_4__["default"].div
 var WrapperButtonUpload = styled_components__WEBPACK_IMPORTED_MODULE_4__["default"].div(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral(["\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  margin-left: 15px;\n"])));
 var ButtonUpload = styled_components__WEBPACK_IMPORTED_MODULE_4__["default"].button.attrs({
   className: 'btn btn-primary'
-})(_templateObject4 || (_templateObject4 = _taggedTemplateLiteral(["\n  \n"])));
+})(_templateObject4 || (_templateObject4 = _taggedTemplateLiteral(["\n  margin: 0;\n"])));
 
 function InputImage(_ref) {
   var value = _ref.value,
-      onChange = _ref.onChange;
+      _onChange = _ref.onChange;
 
   var _useTranslation = (0,react_i18next__WEBPACK_IMPORTED_MODULE_5__.useTranslation)(),
       t = _useTranslation.t;
 
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(),
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(''),
       _useState2 = _slicedToArray(_useState, 2),
-      uploading = _useState2[0],
-      setUploading = _useState2[1];
+      imgUrl = _useState2[0],
+      setImgUrl = _useState2[1];
 
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(''),
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
       _useState4 = _slicedToArray(_useState3, 2),
-      imgUrl = _useState4[0],
-      setImgUrl = _useState4[1];
+      showBtnUpload = _useState4[0],
+      setShowBtnUpload = _useState4[1];
 
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(''),
       _useState6 = _slicedToArray(_useState5, 2),
-      showBtnUpload = _useState6[0],
-      setShowBtnUpload = _useState6[1];
+      error = _useState6[0],
+      setError = _useState6[1];
 
-  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(''),
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
       _useState8 = _slicedToArray(_useState7, 2),
-      error = _useState8[0],
-      setError = _useState8[1];
+      imageUploading = _useState8[0],
+      setImageUploading = _useState8[1];
 
   var refFile = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)();
 
   var handleBrowseFile = function handleBrowseFile() {
-    if (uploading) return;
+    if (imageUploading) return;
     refFile.current.click();
   };
 
   var handleFileSelected = function handleFileSelected(event) {
-    if (uploading) return;
+    if (imageUploading) return;
     if (!event.target.files.length) return;
 
     var _event$target$files = _slicedToArray(event.target.files, 1),
@@ -7122,7 +7122,11 @@ function InputImage(_ref) {
     }
 
     setError('');
-    setImgUrl(URL.createObjectURL(file));
+    var urlImage = URL.createObjectURL(file);
+    setImgUrl(urlImage);
+
+    _onChange(urlImage);
+
     setShowBtnUpload(true);
   };
 
@@ -7131,27 +7135,29 @@ function InputImage(_ref) {
         file = _refFile$current$file[0];
 
     if (!(0,_helpers__WEBPACK_IMPORTED_MODULE_2__.isFileImage)(file)) {
-      setError(t('The file selected is not a image'));
+      setError(t('The file selected is not an image'));
       return;
     }
 
-    setError('');
-    setUploading(true);
-    /*axios.post(``, {})
-        .then(res => {
-            setUploading(false);
-        })
-        .catch(error => {
-            setUploading(false);
-        });*/
+    setError(''); //setImageUploading(true);
+
+    var formData = new FormData();
+    formData.append('image', file);
+    axios.post("/api/image/upload", formData).then(function (res) {
+      if (res.data.success) {
+        setImgUrl(res.data.image_url);
+      } //setImageUploading(false);
+
+    })["catch"](function (error) {//setImageUploading(false);
+    });
   };
 
   var LoadingIcon = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
     className: "spinner-border spinner-border-sm",
     role: "status",
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("span", {
       className: "visually-hidden",
-      children: "Loading..."
+      children: [t('Loading'), "..."]
     })
   });
 
@@ -7165,12 +7171,14 @@ function InputImage(_ref) {
           className: "form-control",
           placeholder: t('Enter image url'),
           value: value,
-          onChange: onChange
+          onChange: function onChange() {
+            return _onChange();
+          }
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("button", {
           className: "btn btn-outline-secondary",
           type: "button",
           onClick: handleBrowseFile,
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_data_icons__WEBPACK_IMPORTED_MODULE_0__.IconCloudArrowUp, {}), " Browse"]
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_data_icons__WEBPACK_IMPORTED_MODULE_0__.IconCloudArrowUp, {}), " ", t('Browse')]
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
           type: "file",
           style: {
@@ -7193,7 +7201,7 @@ function InputImage(_ref) {
           onClick: function onClick() {
             return uploadImage();
           },
-          children: [uploading ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(LoadingIcon, {}) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("i", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("i", {
             children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_data_icons__WEBPACK_IMPORTED_MODULE_0__.IconCloudArrowUp, {})
           }), " ", t('Upload image')]
         })
@@ -8072,7 +8080,8 @@ var DivItem = styled_components__WEBPACK_IMPORTED_MODULE_3__["default"].div(_tem
 var LinkItem = styled_components__WEBPACK_IMPORTED_MODULE_3__["default"].a(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n  min-height: 20px;\n"])));
 function WrapperItemWithAction(props) {
   var tagName = props.tagName,
-      menuIndex = props.menuIndex;
+      menuIndex = props.menuIndex,
+      bgImage = props.bgImage;
 
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
       _useState2 = _slicedToArray(_useState, 2),
@@ -8088,9 +8097,17 @@ function WrapperItemWithAction(props) {
 
   if (typeof tagProps.tagName !== "undefined") delete tagProps.tagName;
   if (typeof tagProps.menuIndex !== "undefined") delete tagProps.menuIndex;
+  var style = {};
+
+  if (bgImage) {
+    style.backgroundImage = "url('".concat(bgImage, "')");
+    style.backgroundSize = 'cover';
+  }
 
   if (tagName == 'a') {
-    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(LinkItem, _objectSpread(_objectSpread({}, tagProps), {}, {
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(LinkItem, _objectSpread(_objectSpread({
+      style: style
+    }, tagProps), {}, {
       onMouseEnter: function onMouseEnter() {
         return handleToggleAction(true);
       },
@@ -8103,7 +8120,9 @@ function WrapperItemWithAction(props) {
     }));
   }
 
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(DivItem, _objectSpread(_objectSpread({}, tagProps), {}, {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(DivItem, _objectSpread(_objectSpread({
+    style: style
+  }, tagProps), {}, {
     onMouseEnter: function onMouseEnter() {
       return handleToggleAction(true);
     },
@@ -8699,6 +8718,7 @@ function MainMenuItem(_ref) {
   console.log(menuLink);
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(MenuItem, {
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_WrapperItemWithAction__WEBPACK_IMPORTED_MODULE_5__["default"], {
+      bgImage: item.bg_image,
       tagName: "a",
       href: menuLink,
       onClick: handleClickLink,

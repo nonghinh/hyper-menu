@@ -47,7 +47,7 @@ function FormItem(props){
             inputItem = <SwitchButton onChange={handleChangeValue} name={name} value={value ?? 0} label={label} />
             break;
         case 'image':
-            inputItem = <InputImage onChange={handleChangeValue} name={name} value={value ?? ''} />
+            inputItem = <InputImage name={name} value={value ?? ''} onChange={handleChangeValue} />
             break;
         case 'col_size':
             inputItem = <ColumnSize onChange={handleChangeValue} name={name} value={value ?? 3} />

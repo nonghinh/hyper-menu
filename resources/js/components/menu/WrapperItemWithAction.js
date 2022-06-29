@@ -9,7 +9,7 @@ const LinkItem = styled.a`
   min-height: 20px;
 `;
 export default function WrapperItemWithAction(props){
-    const {tagName, menuIndex} = props;
+    const {tagName, menuIndex, bgImage} = props;
     const [showAction, setShowAction] = useState(false);
     const handleToggleAction = (show) => {
         console.log('fxx')
@@ -20,14 +20,19 @@ export default function WrapperItemWithAction(props){
         delete tagProps.tagName;
     if (typeof tagProps.menuIndex !== "undefined")
         delete tagProps.menuIndex;
+    let style = {};
+    if (bgImage) {
+        style.backgroundImage = `url('${bgImage}')`;
+        style.backgroundSize = 'cover';
+    }
     if (tagName == 'a'){
 
-        return <LinkItem {...tagProps} onMouseEnter={()=>handleToggleAction(true)} onMouseLeave={()=>handleToggleAction(false)}>
+        return <LinkItem style={style} {...tagProps} onMouseEnter={()=>handleToggleAction(true)} onMouseLeave={()=>handleToggleAction(false)}>
             {showAction && <MenuAction menuIndex={menuIndex} />}
             {props.children}
         </LinkItem>
     }
-    return <DivItem {...tagProps} onMouseEnter={()=>handleToggleAction(true)} onMouseLeave={()=>handleToggleAction(false)}>
+    return <DivItem style={style} {...tagProps} onMouseEnter={()=>handleToggleAction(true)} onMouseLeave={()=>handleToggleAction(false)}>
         {showAction && <MenuAction menuIndex={menuIndex} />}
         {props.children}
     </DivItem>
